@@ -1,0 +1,22 @@
+Date: 2021-03-31
+List of calculations: 
+1.
+Function: 
+Result: 
+Calculation made at: 23:35:57
+2.
+Function: 12
+Result: 112
+Calculation made at: 23:35:57
+<-------------->
+Date: 2021-03-31
+List of calculations: 
+1.
+Function: 
+Result: 
+Calculation made at: 23:38:38
+2.
+Function: 12
+Result: 112
+Calculation made at: 23:38:38
+<-------------->

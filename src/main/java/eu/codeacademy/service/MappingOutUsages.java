@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface MappingOutUsages {
-    Map<LocalDate, List<Calculations>> mapping(LocalDate date, List<Calculations> list);
+    Map<String, List<Calculations>> mapping(String date, List<Calculations> list);
 }

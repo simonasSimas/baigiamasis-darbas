@@ -1,16 +1,17 @@
 package eu.codeacademy.module;
 
+import eu.codeacademy.service.AddToFile;
 import eu.codeacademy.service.MappingOutUsages;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.ZoneId;
+import java.util.*;
 
-public class CalculatorUsageDateTracker implements MappingOutUsages {
+import static java.util.Calendar.getInstance;
+
+public class CalculatorUsageDateTracker extends AddToFile implements MappingOutUsages {
     private List<Calculations> calculations = new ArrayList<>();
-    private LocalDate date = LocalDate.now();
+    private final String date = "" + LocalDate.now();
 
 
     public void addCalculation(Calculations calculation){
@@ -18,9 +19,17 @@ public class CalculatorUsageDateTracker implements MappingOutUsages {
     }
 
     @Override
-    public Map<LocalDate, List<Calculations>> mapping(LocalDate date, List<Calculations> list) {
-        Map<LocalDate, List<Calculations>> mapping = new HashMap<>();
+    public Map<String, List<Calculations>> mapping(String date, List<Calculations> list) {
+        Map<String, List<Calculations>> mapping = new HashMap<>();
         mapping.put(date,list);
         return mapping;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public List<Calculations> getCalculations() {
+        return calculations;
     }
 }

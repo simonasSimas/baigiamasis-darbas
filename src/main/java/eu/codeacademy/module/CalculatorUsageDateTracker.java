@@ -4,10 +4,10 @@ import eu.codeacademy.service.AddToFile;
 import eu.codeacademy.service.MappingOutUsages;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
-
-import static java.util.Calendar.getInstance;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CalculatorUsageDateTracker extends AddToFile implements MappingOutUsages {
     private List<Calculations> calculations = new ArrayList<>();

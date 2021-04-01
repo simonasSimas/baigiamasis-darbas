@@ -1,13 +1,17 @@
 package eu.codeacademy.module;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Calculations {
     private String function;
     private String result;
-    private final Time time =Time.valueOf(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm:ss"))));
+    private Time time =Time.valueOf(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm:ss"))));
 
     public Calculations(String function, String result) {
         this.function = function;
@@ -32,6 +36,17 @@ public class Calculations {
 
     public Time getTime() {
         return time;
+    }
+
+    public void setTime(String time) {
+        DateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        Date date = null;
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.time = new Time(date.getTime());
     }
 
     @Override

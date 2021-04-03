@@ -8,12 +8,15 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class Calculations {
+public class Calculation {
     private String function;
     private String result;
     private Time time =Time.valueOf(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm:ss"))));
 
-    public Calculations(String function, String result) {
+    public Calculation(){
+    }
+
+    public Calculation(String function, String result) {
         this.function = function;
         this.result = result;
     }
@@ -47,6 +50,10 @@ public class Calculations {
             e.printStackTrace();
         }
         this.time = new Time(date.getTime());
+    }
+    public void resetCalculation(){
+        setFunction("");
+        setResult("");
     }
 
     @Override

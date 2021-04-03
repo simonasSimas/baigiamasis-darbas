@@ -1,5 +1,5 @@
 Date: 2021-03-31
-List of calculations: 
+List of calculation:
 1.
 Function: 1
 Result: 123
@@ -10,7 +10,7 @@ Result: 112
 Calculation made at: 23:35:57
 <-------------->
 Date: 2021-04-01
-List of calculations: 
+List of calculation:
 1.
 Function: 
 Result: 

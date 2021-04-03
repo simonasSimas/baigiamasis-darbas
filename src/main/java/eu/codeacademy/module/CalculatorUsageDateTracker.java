@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Map;
 
 public class CalculatorUsageDateTracker extends AddToFile implements MappingOutUsages {
-    private List<Calculations> calculations = new ArrayList<>();
+    private List<Calculation> calculations = new ArrayList<>();
     private final String date = "" + LocalDate.now();
 
 
-    public void addCalculation(Calculations calculation){
+    public void addCalculation(Calculation calculation){
         calculations.add(calculation);
     }
 
     @Override
-    public Map<String, List<Calculations>> mapping(String date, List<Calculations> list) {
-        Map<String, List<Calculations>> mapping = new HashMap<>();
+    public Map<String, List<Calculation>> mapping(String date, List<Calculation> list) {
+        Map<String, List<Calculation>> mapping = new HashMap<>();
         mapping.put(date,list);
         return mapping;
     }
@@ -29,7 +29,7 @@ public class CalculatorUsageDateTracker extends AddToFile implements MappingOutU
         return date;
     }
 
-    public List<Calculations> getCalculations() {
+    public List<Calculation> getCalculations() {
         return calculations;
     }
 }

@@ -1,7 +1,8 @@
-package eu.codeacademy.module;
+package eu.codeacademy.service;
 
-import eu.codeacademy.service.AddToFile;
-import eu.codeacademy.service.MappingOutUsages;
+import eu.codeacademy.module.Calculation;
+import eu.codeacademy.service.file_handling.AddToFile;
+import eu.codeacademy.service.file_handling.MappingOutUsages;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

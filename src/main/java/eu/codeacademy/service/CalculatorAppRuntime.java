@@ -1,10 +1,10 @@
-package eu.codeacademy;
+package eu.codeacademy.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.codeacademy.module.Calculation;
 import eu.codeacademy.module.Numbers;
-import eu.codeacademy.service.CalculatorUsageDateTracker;
-import eu.codeacademy.service.CurrentResultHistory;
-import eu.codeacademy.service.ViewMenuBar;
+import eu.codeacademy.service.app_interface.ViewMenuBar;
+import eu.codeacademy.service.file_handling.CurrentResultHistory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,13 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CalculatoAppRuntime {
-    public static void calculatorRuntime() {
+public class CalculatorAppRuntime {
+    public static void run() throws IOException {
+
 
         //needed objects
         CalculatorUsageDateTracker calculatorTracker = new CalculatorUsageDateTracker();
         File file = new File("target/currentSessionResults.json");
         Calculation calculation = new Calculation("", "");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(file, "");
         //
 
         //Jframe setup

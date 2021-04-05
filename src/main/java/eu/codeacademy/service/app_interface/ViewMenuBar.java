@@ -1,4 +1,4 @@
-package eu.codeacademy.service;
+package eu.codeacademy.service.app_interface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +9,7 @@ public class ViewMenuBar extends JFrame {
     public static void getFullHistory() throws IOException {
         JFrame frame = new JFrame("History");
         frame.setSize(285, 430);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
         panel.setPreferredSize(new Dimension(285, 430));
         JTextArea textField = new JTextArea(15, 5);

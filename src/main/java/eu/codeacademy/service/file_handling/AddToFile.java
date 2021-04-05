@@ -10,8 +10,8 @@ public abstract class AddToFile {
     public void addMapToFile(Map<String, List<Calculation>> map) {
         PrintWriter pw = write();
         List<String> listOfDates = new ArrayList<>(map.keySet());
-        int functionNumber = 1;
         for (String s : listOfDates) {
+            int functionNumber = 1;
             pw.println("Date: " + s);
             pw.println("List of calculations: ");
             for (Calculation calculation : map.get(s)) {
@@ -22,14 +22,15 @@ public abstract class AddToFile {
                 functionNumber++;
             }
             pw.println("<-------------->");
-            pw.close();
         }
+        pw.close();
     }
 
     private PrintWriter write() {
+        File file = new File("calculatorusagehistory.txt");
         FileWriter fw = null;
         try {
-            fw = new FileWriter("calculatorusagehistory.txt", true);
+            fw = new FileWriter(file, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,12 +38,12 @@ public abstract class AddToFile {
         return new PrintWriter(fw);
     }
 
-    public Map<String, List<Calculation>> moveFileToMap(File file) {
-        Scanner sc = fileScanner(file);
-        List<Calculation> listOfCalculations = new ArrayList<>();
+    public Map<String, List<Calculation>> moveFileToMap() {
+        Scanner sc = fileScanner(new File("calculatorusagehistory.txt"));
+
         Map<String, List<Calculation>> mapOfFile = new HashMap<>();
-        while (sc.hasNextLine()) {
-            listOfCalculations.clear();
+        while (sc.hasNext()) {
+            List<Calculation> listOfCalculations = new ArrayList<>();
             String dateFromFile = sc.nextLine().substring(6);
             sc.nextLine();
             while (true) {
@@ -61,7 +62,6 @@ public abstract class AddToFile {
             }
             mapOfFile.put(dateFromFile, listOfCalculations);
         }
-
         return mapOfFile;
 
     }
@@ -74,5 +74,16 @@ public abstract class AddToFile {
             e.printStackTrace();
         }
         return sc;
+    }
+
+    public void clearFile() {
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter("calculatorusagehistory.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PrintWriter pw = new PrintWriter(fw);
+        pw.println("");
     }
 }

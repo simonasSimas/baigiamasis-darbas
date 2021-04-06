@@ -1,10 +1,11 @@
-package eu.codeacademy.service;
+package eu.codeacademy.app_interface.run_app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.codeacademy.module.Calculation;
-import eu.codeacademy.module.Numbers;
-import eu.codeacademy.service.app_interface.ViewMenuBar;
-import eu.codeacademy.service.file_handling.CurrentResultHistory;
+import eu.codeacademy.module.enums.Numbers;
+import eu.codeacademy.service.CalculatorUsageDateTrackerImpl;
+import eu.codeacademy.app_interface.ViewMenuBar;
+import eu.codeacademy.file_handling.CurrentResultHistory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +21,8 @@ import java.util.Map;
 public class CalculatorAppRuntime {
     public static void run() throws IOException {
 
-
         //needed objects
-        CalculatorUsageDateTracker calculatorTracker = new CalculatorUsageDateTracker();
+        CalculatorUsageDateTrackerImpl calculatorTracker = new CalculatorUsageDateTrackerImpl();
         File file = new File("target/currentSessionResults.json");
         Calculation calculation = new Calculation("", "");
         ObjectMapper mapper = new ObjectMapper();
@@ -285,7 +285,7 @@ public class CalculatorAppRuntime {
             } else if (chosenOption[0] == 2) {
                 numberField.setText("" + (Double.parseDouble(curretnNumber[0]) - Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 3) {
-                numberField.setText("" + (Double.parseDouble(curretnNumber[0]) / Double.parseDouble(numberField.getText())));
+                    numberField.setText("" + (Double.parseDouble(curretnNumber[0]) / Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 4) {
                 numberField.setText("" + (Double.parseDouble(curretnNumber[0]) * Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 0) {
@@ -294,14 +294,14 @@ public class CalculatorAppRuntime {
             calculation.setFunction(calculation.getFunction().concat(numberField.getText()));
             calculation.setResult(numberField.getText());
             calculation.setTime(LocalTime.now() + "");
-
+            CurrentResultHistory.addResultToCurrentHistory(calculation,file);
         });
         clear.addActionListener(e -> {
             numberField.setText("0");
             curretnNumber[0] = "";
             calculation.resetCalculation();
         });
-        history.addActionListener(e -> CurrentResultHistory.addResultToCurrentHistory(calculation, file));
+        history.addActionListener(e -> CurrentResultHistory.seeCurrentResults());
         point.addActionListener(e -> numberField.setText(numberField.getText().concat(".")));
         save.addActionListener(actionEvent -> {
                     Map<String, List<Calculation>> map = calculatorTracker.moveFileToMap();

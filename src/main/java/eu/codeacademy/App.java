@@ -1,6 +1,6 @@
 package eu.codeacademy;
 
-import eu.codeacademy.service.CalculatorAppRuntime;
+import eu.codeacademy.app_interface.run_app.CalculatorAppRuntime;
 
 import java.io.IOException;
 

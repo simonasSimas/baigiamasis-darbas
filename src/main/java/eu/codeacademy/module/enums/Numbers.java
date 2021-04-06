@@ -1,4 +1,4 @@
-package eu.codeacademy.module;
+package eu.codeacademy.module.enums;
 
 public enum Numbers {
 

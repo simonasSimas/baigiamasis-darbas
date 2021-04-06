@@ -1,12 +1,12 @@
-package eu.codeacademy.service.app_interface;
+package eu.codeacademy.app_interface;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
-public class ViewMenuBar extends JFrame {
+public interface ViewMenuBar  {
 
-    public static void getFullHistory() throws IOException {
+    static void getFullHistory() throws IOException {
         JFrame frame = new JFrame("History");
         frame.setSize(285, 430);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

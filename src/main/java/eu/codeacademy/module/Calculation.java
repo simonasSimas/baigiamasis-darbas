@@ -11,9 +11,9 @@ import java.util.Date;
 public class Calculation {
     private String function;
     private String result;
-    private Time time =Time.valueOf(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm:ss"))));
+    private Time time = Time.valueOf(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("H:mm:ss"))));
 
-    public Calculation(){
+    public Calculation() {
     }
 
     public Calculation(String function, String result) {
@@ -51,7 +51,8 @@ public class Calculation {
         }
         this.time = new Time(date.getTime());
     }
-    public void resetCalculation(){
+
+    public void resetCalculation() {
         setFunction("");
         setResult("");
     }
@@ -60,7 +61,7 @@ public class Calculation {
     public String toString() {
         return
                 "Function: " + function + '\n' +
-                "Result: " + result + '\n' +
-                "Calculation made at: " + time;
+                        "Result: " + result + '\n' +
+                        "Calculation made at: " + time;
     }
 }

@@ -1,41 +1,60 @@
+Date: 2021-04-06
+List of calculations: 
+1.
+Function:   5 * 5 = 25.0
+Result:   25.0
+Calculation made at: 19:24:00
+2.
+Function:   5 * 5 = 25.0
+Result:   25.0
+Calculation made at: 19:24:00
+3.
+Function:  6 * 6 = 36.0
+Result:  36.0
+Calculation made at: 19:27:30
+4.
+Function: 88 + 3 = 91.0
+Result: 91.0
+Calculation made at: 19:34:36
+<-------------->
 Date: 2021-04-05
 List of calculations: 
 1.
-Function:    2 = 4.0
-Result:    4.0
+Function:       2 = 4.0
+Result:       4.0
 Calculation made at: 15:13:29
 2.
-Function:   5 = 25.0
-Result:   25.0
+Function:      5 = 25.0
+Result:      25.0
 Calculation made at: 16:01:47
 3.
-Function:  2 * 2 = 4.0
-Result:  4.0
+Function:     2 * 2 = 4.0
+Result:     4.0
 Calculation made at: 17:02:46
 4.
-Function: 8 * 8 = 64.0
-Result: 64.0
+Function:    8 * 8 = 64.0
+Result:    64.0
 Calculation made at: 17:03:24
 <-------------->
 Date: 2021-04-01
 List of calculations: 
 1.
-Function:   
-Result:   
+Function:      
+Result:      
 Calculation made at: 15:57:19
 2.
-Function:    12
-Result:    112
+Function:       12
+Result:       112
 Calculation made at: 15:57:19
 <-------------->
 Date: 2021-03-31
 List of calculations: 
 1.
-Function:    1
-Result:    123
+Function:       1
+Result:       123
 Calculation made at: 23:35:57
 2.
-Function:    12
-Result:    112
+Function:       12
+Result:       112
 Calculation made at: 23:35:57
 <-------------->

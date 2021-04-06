@@ -1,4 +1,4 @@
-package eu.codeacademy.service.file_handling;
+package eu.codeacademy.file_handling;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.codeacademy.module.Calculation;
@@ -16,7 +16,6 @@ public class CurrentResultHistory {
 
     public static void addResultToCurrentHistory(Calculation calculation, File file) {
         ObjectMapper mapper = new ObjectMapper();
-        JFrame frame = new JFrame("History");
         String oldJson = "";
         String newJson = "";
         if (file.length() > 2) {
@@ -34,6 +33,10 @@ public class CurrentResultHistory {
                 e.printStackTrace();
             }
         }
+
+    }
+    public static void seeCurrentResults(){
+        JFrame frame = new JFrame("History");
         frame.setSize(285, 430);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();

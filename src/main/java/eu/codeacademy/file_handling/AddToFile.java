@@ -1,4 +1,4 @@
-package eu.codeacademy.service.file_handling;
+package eu.codeacademy.file_handling;
 
 import eu.codeacademy.module.Calculation;
 

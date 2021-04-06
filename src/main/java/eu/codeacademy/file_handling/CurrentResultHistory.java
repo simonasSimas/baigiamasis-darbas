@@ -50,7 +50,7 @@ public class CurrentResultHistory {
         }
         List<String> listOfResults = new ArrayList<>();
         String oneResult = "";
-        for (int i = 0; i < jsonFileAsString.length(); i++) {
+        for (int i = 1; i < jsonFileAsString.length(); i++) {
             if (i == jsonFileAsString.length() - 1) {
                 listOfResults.add(oneResult + "\n");
             } else {

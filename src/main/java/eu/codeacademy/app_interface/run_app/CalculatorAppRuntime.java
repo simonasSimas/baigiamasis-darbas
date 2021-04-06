@@ -26,7 +26,7 @@ public class CalculatorAppRuntime {
         File file = new File("target/currentSessionResults.json");
         Calculation calculation = new Calculation("", "");
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(file, "");
+        mapper.writeValue(file, "Calculations: ");
         //
 
         //Jframe setup

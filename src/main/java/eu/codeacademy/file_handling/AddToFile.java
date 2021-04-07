@@ -14,6 +14,7 @@ public abstract class AddToFile {
             int functionNumber = 1;
             pw.println("Date: " + s);
             pw.println("List of calculations: ");
+
             for (Calculation calculation : map.get(s)) {
                 pw.println(functionNumber + ".");
                 pw.println("Function: " + calculation.getFunction());

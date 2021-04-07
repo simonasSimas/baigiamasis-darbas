@@ -66,9 +66,8 @@ public interface CurrentResultHistory {
             }
         }
         textArea.setText("");
-        for (String s : listOfResults) {
-            textArea.append(s);
-        }
+        listOfResults
+                .forEach(textArea::append);
         panel.add(textArea);
         frame.getContentPane().add(textArea, BorderLayout.CENTER);
         frame.pack();

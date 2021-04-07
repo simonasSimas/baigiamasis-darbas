@@ -12,30 +12,32 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrentResultHistory {
+public interface CurrentResultHistory {
 
-    public static void addResultToCurrentHistory(Calculation calculation, File file) {
+    static void addResultToCurrentHistory(Calculation calculation, File file) {
         ObjectMapper mapper = new ObjectMapper();
         String oldJson = "";
         String newJson = "";
-        if (file.length() > 2) {
-            try {
-                oldJson = mapper.readValue(file, String.class) + '-';
-                newJson = oldJson.concat(calculation.getResult());
-                mapper.writeValue(file, newJson);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                mapper.writeValue(file, calculation.getResult());
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (!calculation.getResult().equals("")) {
+            if (file.length() > 2) {
+                try {
+                    oldJson = mapper.readValue(file, String.class) + '-';
+                    newJson = oldJson.concat(calculation.getResult());
+                    mapper.writeValue(file, newJson);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    mapper.writeValue(file, calculation.getResult());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
     }
-    public static void seeCurrentResults(){
+
+    static void seeCurrentResults() {
         JFrame frame = new JFrame("History");
         frame.setSize(285, 430);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

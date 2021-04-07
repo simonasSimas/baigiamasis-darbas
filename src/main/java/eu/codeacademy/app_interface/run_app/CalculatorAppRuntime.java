@@ -1,11 +1,13 @@
 package eu.codeacademy.app_interface.run_app;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.codeacademy.module.Calculation;
-import eu.codeacademy.module.enums.Numbers;
-import eu.codeacademy.service.CalculatorUsageDateTrackerImpl;
 import eu.codeacademy.app_interface.ViewMenuBar;
 import eu.codeacademy.file_handling.CurrentResultHistory;
+import eu.codeacademy.module.Calculation;
+import eu.codeacademy.module.enums.Numbers;
+import eu.codeacademy.module.exceptions.DivisionByZero;
+import eu.codeacademy.module.exceptions.SquareRootFromNegativeNumber;
+import eu.codeacademy.service.CalculatorUsageDateTrackerImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,15 +20,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CalculatorAppRuntime {
-    public static void run() throws IOException {
+public interface CalculatorAppRuntime {
+    static void run() {
 
         //needed objects
         CalculatorUsageDateTrackerImpl calculatorTracker = new CalculatorUsageDateTrackerImpl();
         File file = new File("target/currentSessionResults.json");
         Calculation calculation = new Calculation("", "");
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(file, "Calculations: ");
+        try {
+            mapper.writeValue(file, "Calculations: ");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //
 
         //Jframe setup
@@ -266,7 +272,11 @@ public class CalculatorAppRuntime {
         });
         squareRoot.addActionListener(e -> {
             calculation.setFunction(calculation.getFunction().concat(" \u221A "));
-            curretnNumber[0] = "" + (Math.sqrt(Double.parseDouble(numberField.getText())));
+            try {
+                curretnNumber[0] = "" + (Math.sqrt(Double.parseDouble(numberField.getText())));
+            }catch (SquareRootFromNegativeNumber ex) {
+                numberField.setText("ERROR: - ROOT");
+            }
             if (curretnNumber[0].length() > 15) {
                 numberField.setText(curretnNumber[0].substring(0, 15));
             }
@@ -285,7 +295,11 @@ public class CalculatorAppRuntime {
             } else if (chosenOption[0] == 2) {
                 numberField.setText("" + (Double.parseDouble(curretnNumber[0]) - Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 3) {
+                try {
                     numberField.setText("" + (Double.parseDouble(curretnNumber[0]) / Double.parseDouble(numberField.getText())));
+                } catch (DivisionByZero ex){
+                    numberField.setText("ERROR: DIV BY 0");
+                }
             } else if (chosenOption[0] == 4) {
                 numberField.setText("" + (Double.parseDouble(curretnNumber[0]) * Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 0) {
@@ -294,7 +308,7 @@ public class CalculatorAppRuntime {
             calculation.setFunction(calculation.getFunction().concat(numberField.getText()));
             calculation.setResult(numberField.getText());
             calculation.setTime(LocalTime.now() + "");
-            CurrentResultHistory.addResultToCurrentHistory(calculation,file);
+            CurrentResultHistory.addResultToCurrentHistory(calculation, file);
         });
         clear.addActionListener(e -> {
             numberField.setText("0");
@@ -321,11 +335,11 @@ public class CalculatorAppRuntime {
                 }
         );
 
+        //jframe ending
         JPanel topPanel = new JPanel();
         JPanel rightPanel = new JPanel(new GridLayout(0, 1));
         JPanel leftPanel = new JPanel(new GridLayout(0, 1));
         JPanel centerPanel = new JPanel(new GridLayout(0, 1));
-
         topPanel.setPreferredSize(new Dimension(280, 50));
         rightPanel.setPreferredSize(new Dimension(90, 30));
         leftPanel.setPreferredSize(new Dimension(90, 30));
@@ -358,5 +372,6 @@ public class CalculatorAppRuntime {
         frame.getContentPane().add(BorderLayout.EAST, rightPanel);
         frame.getContentPane().add(BorderLayout.CENTER, centerPanel);
         frame.setVisible(true);
+        //
     }
 }

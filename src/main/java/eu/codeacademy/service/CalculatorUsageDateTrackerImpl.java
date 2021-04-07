@@ -1,7 +1,7 @@
 package eu.codeacademy.service;
 
-import eu.codeacademy.module.Calculation;
 import eu.codeacademy.file_handling.AddToFile;
+import eu.codeacademy.module.Calculation;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,11 +12,6 @@ import java.util.Map;
 public class CalculatorUsageDateTrackerImpl extends AddToFile implements CalculatorUsageDateTracker {
     private final List<Calculation> calculations = new ArrayList<>();
     private final String date = "" + LocalDate.now();
-
-
-    public void addCalculation(Calculation calculation){
-        calculations.add(calculation);
-    }
 
     @Override
     public Map<String, List<Calculation>> mapping(String date, List<Calculation> list) {
@@ -34,6 +29,4 @@ public class CalculatorUsageDateTrackerImpl extends AddToFile implements Calcula
     public List<Calculation> getCalculations() {
         return calculations;
     }
-
-
 }

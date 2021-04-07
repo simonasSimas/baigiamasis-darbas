@@ -8,6 +8,7 @@ import eu.codeacademy.module.enums.Numbers;
 import eu.codeacademy.module.exceptions.DivisionByZero;
 import eu.codeacademy.module.exceptions.SquareRootFromNegativeNumber;
 import eu.codeacademy.service.CalculatorUsageDateTrackerImpl;
+import javafx.scene.chart.ScatterChart;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,11 +26,12 @@ public interface CalculatorAppRuntime {
 
         //needed objects
         CalculatorUsageDateTrackerImpl calculatorTracker = new CalculatorUsageDateTrackerImpl();
-        File file = new File("target/currentSessionResults.json");
+        File fullHistoryFile = new File("calculatorusagehistory.txt");
+        File jsonFile = new File("target/currentSessionResults.json");
         Calculation calculation = new Calculation("", "");
         ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.writeValue(file, "Calculations: ");
+            mapper.writeValue(jsonFile, "Calculations: ");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,7 +117,7 @@ public interface CalculatorAppRuntime {
         history.setFont(font1);
 
         final int[] chosenOption = {0};
-        final String[] curretnNumber = {"0"};
+        final String[] currentNumber = {"0"};
         numberField.setText(Numbers.ZERO.getValue());
         zero.addActionListener(e -> {
             if ((Double.parseDouble(numberField.getText()) != 0)) {
@@ -232,9 +234,9 @@ public interface CalculatorAppRuntime {
             String currentFunction = calculation.getFunction();
             calculation.setFunction(currentFunction.concat(" + "));
             if (numberField.getText().length() > 15) {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
+                currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
             } else {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
+                currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
             }
             numberField.setText("0");
             chosenOption[0] = 1;
@@ -242,29 +244,37 @@ public interface CalculatorAppRuntime {
         minus.addActionListener(e -> {
             calculation.setFunction(calculation.getFunction().concat(" - "));
             if (numberField.getText().length() > 15) {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
+                currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
             } else {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
+                currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
             }
             numberField.setText("0");
             chosenOption[0] = 2;
         });
         division.addActionListener(e -> {
             calculation.setFunction(calculation.getFunction().concat(" / "));
-            if (numberField.getText().length() > 15) {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
-            } else {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
+            try {
+                if (Double.parseDouble(numberField.getText()) != 0) {
+                    if (numberField.getText().length() > 15) {
+                        currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
+                    } else {
+                        currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
+                    }
+                    numberField.setText("0");
+                    chosenOption[0] = 3;
+                } else {
+                    throw new DivisionByZero();
+                }
+            } catch (DivisionByZero ex){
+                numberField.setText(ex.getMessage());
             }
-            numberField.setText("0");
-            chosenOption[0] = 3;
         });
         multiplication.addActionListener(e -> {
             calculation.setFunction(calculation.getFunction().concat(" * "));
             if (numberField.getText().length() > 15) {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
+                currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, 15);
             } else {
-                curretnNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
+                currentNumber[0] = ("" + (Double.parseDouble(numberField.getText()))).substring(0, numberField.getText().length());
             }
 
             numberField.setText("0");
@@ -273,52 +283,56 @@ public interface CalculatorAppRuntime {
         squareRoot.addActionListener(e -> {
             calculation.setFunction(calculation.getFunction().concat(" \u221A "));
             try {
-                curretnNumber[0] = "" + (Math.sqrt(Double.parseDouble(numberField.getText())));
-            }catch (SquareRootFromNegativeNumber ex) {
-                numberField.setText("ERROR: - ROOT");
+                if (Double.parseDouble(numberField.getText()) > 0) {
+                    currentNumber[0] = "" + (Math.sqrt(Double.parseDouble(numberField.getText())));
+                } else {
+                    throw new SquareRootFromNegativeNumber();
+                }
+            }catch (SquareRootFromNegativeNumber ex){
+                numberField.setText(ex.getMessage());
             }
-            if (curretnNumber[0].length() > 15) {
-                numberField.setText(curretnNumber[0].substring(0, 15));
+            if (currentNumber[0].length() > 15) {
+                numberField.setText(currentNumber[0].substring(0, 15));
             }
         });
         square.addActionListener(e -> {
             calculation.setFunction(calculation.getFunction().concat(" ^2 "));
-            curretnNumber[0] = "" + (Double.parseDouble(numberField.getText()) * Double.parseDouble(numberField.getText()));
-            if (curretnNumber[0].length() > 15) {
-                numberField.setText(curretnNumber[0].substring(0, 15));
+            currentNumber[0] = "" + (Double.parseDouble(numberField.getText()) * Double.parseDouble(numberField.getText()));
+            if (currentNumber[0].length() > 15) {
+                numberField.setText(currentNumber[0].substring(0, 15));
             }
         });
         equals.addActionListener(e -> {
             calculation.setFunction(calculation.getFunction().concat(" = "));
             if (chosenOption[0] == 1) {
-                numberField.setText("" + (Double.parseDouble(curretnNumber[0]) + Double.parseDouble(numberField.getText())));
+                numberField.setText("" + (Double.parseDouble(currentNumber[0]) + Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 2) {
-                numberField.setText("" + (Double.parseDouble(curretnNumber[0]) - Double.parseDouble(numberField.getText())));
+                numberField.setText("" + (Double.parseDouble(currentNumber[0]) - Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 3) {
                 try {
-                    numberField.setText("" + (Double.parseDouble(curretnNumber[0]) / Double.parseDouble(numberField.getText())));
+                    numberField.setText("" + (Double.parseDouble(currentNumber[0]) / Double.parseDouble(numberField.getText())));
                 } catch (DivisionByZero ex){
-                    numberField.setText("ERROR: DIV BY 0");
+                    numberField.setText(ex.getMessage());
                 }
             } else if (chosenOption[0] == 4) {
-                numberField.setText("" + (Double.parseDouble(curretnNumber[0]) * Double.parseDouble(numberField.getText())));
+                numberField.setText("" + (Double.parseDouble(currentNumber[0]) * Double.parseDouble(numberField.getText())));
             } else if (chosenOption[0] == 0) {
-                numberField.setText(curretnNumber[0]);
+                numberField.setText(currentNumber[0]);
             }
             calculation.setFunction(calculation.getFunction().concat(numberField.getText()));
             calculation.setResult(numberField.getText());
             calculation.setTime(LocalTime.now() + "");
-            CurrentResultHistory.addResultToCurrentHistory(calculation, file);
+            CurrentResultHistory.addResultToCurrentHistory(calculation, jsonFile);
         });
         clear.addActionListener(e -> {
             numberField.setText("0");
-            curretnNumber[0] = "";
+            currentNumber[0] = "";
             calculation.resetCalculation();
         });
         history.addActionListener(e -> CurrentResultHistory.seeCurrentResults());
         point.addActionListener(e -> numberField.setText(numberField.getText().concat(".")));
         save.addActionListener(actionEvent -> {
-                    Map<String, List<Calculation>> map = calculatorTracker.moveFileToMap();
+                    Map<String, List<Calculation>> map = calculatorTracker.moveFileToMap(fullHistoryFile);
                     List<Calculation> listOfCalculationsAlreadyMade = new ArrayList<>();
                     String date = LocalDate.now() + "";
                     listOfCalculationsAlreadyMade.add(calculation);
@@ -331,7 +345,7 @@ public interface CalculatorAppRuntime {
                         map.put(LocalDate.now() + "", listOfCalculationsAlreadyMade);
                     }
                     calculatorTracker.clearFile();
-                    calculatorTracker.addMapToFile(map);
+                    calculatorTracker.addMapToFile(map,fullHistoryFile);
                 }
         );
 

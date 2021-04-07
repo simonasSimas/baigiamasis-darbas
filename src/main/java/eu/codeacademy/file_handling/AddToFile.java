@@ -7,8 +7,8 @@ import java.util.*;
 
 public abstract class AddToFile {
 
-    public void addMapToFile(Map<String, List<Calculation>> map) {
-        PrintWriter pw = write();
+    public void addMapToFile(Map<String, List<Calculation>> map,File file) {
+        PrintWriter pw = write(file);
         List<String> listOfDates = new ArrayList<>(map.keySet());
         for (String s : listOfDates) {
             int functionNumber = 1;
@@ -27,8 +27,7 @@ public abstract class AddToFile {
         pw.close();
     }
 
-    private PrintWriter write() {
-        File file = new File("calculatorusagehistory.txt");
+    private PrintWriter write(File file) {
         FileWriter fw = null;
         try {
             fw = new FileWriter(file, true);
@@ -39,8 +38,8 @@ public abstract class AddToFile {
         return new PrintWriter(fw);
     }
 
-    public Map<String, List<Calculation>> moveFileToMap() {
-        Scanner sc = fileScanner(new File("calculatorusagehistory.txt"));
+    public Map<String, List<Calculation>> moveFileToMap(File file) {
+        Scanner sc = fileScanner(file);
 
         Map<String, List<Calculation>> mapOfFile = new HashMap<>();
         while (sc.hasNext()) {
@@ -52,7 +51,7 @@ public abstract class AddToFile {
                     break;
                 } else {
                     String function = sc.nextLine().substring(9);
-                    String result = sc.nextLine().substring(7);
+                    String result = sc.nextLine().substring(8);
                     String time = sc.nextLine().substring(21);
                     Calculation calculation = new Calculation();
                     calculation.setFunction(function);
@@ -84,7 +83,6 @@ public abstract class AddToFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        PrintWriter pw = new PrintWriter(fw);
-        pw.println("");
+        new PrintWriter(fw).println("");
     }
 }
